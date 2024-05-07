@@ -11,45 +11,69 @@
 | first_name         | string  | null: false |
 | last_name_kana     | string  | null: false |
 | first_name_kana    | string  | null: false |
-| birth_year         | integer | null: false |
-| birth_month        | integer | null: false |
-| birth_day          | integer | null: false |
+| birth_day          | date    | null: false |
 
 ### Association
 - has_many :items
 - has_many :orders
+- has_many :addresses, through: :address_users
 
 ## items テーブル
 
 | Column             | Type       | Options     |
 | ------------------ | ---------- | ----------- |
-| item               | text       | null: false |
+| item               | string     | null: false |
 | item_comment       | text       | null: false |
-| item_category      | string     | null: false |
-| item_condition     | string     | null: false |
-| delivery_charge    | string     | null: false |
-| shipping_source    | string     | null: false |
-| delivery_tame      | string     | null: false |
+| item_category_id   | integer    | null: false |
+| item_condition_id  | integer    | null: false |
+| delivery_charge_id | integer    | null: false |
+| shipping_source_id | integer    | null: false |
+| delivery_tame_id   | integer    | null: false |
 | price              | integer    | null: false |
 | user               | references | null: false, foreign_key: true |
+| address            | references | null: false, foreign_key: true |
 
 ### Association
 - belongs_to :user
 - has_one :order
+- belongs_to :address
 
 ## orders テーブル
 
 | Column             | Type   | Options     |
 | -------------- | ---------- | ----------- |
-| post_code      | string     | null: false |
-| prefectures    | string     | null: false |
-| municipalities | string     | null: false |
-| street_address | string     | null: false |
-| building       | string     |             |
-| telephone      | integer    | null: false |
 | user           | references | null: false, foreign_key: true |
+| address        | references | null: false, foreign_key: true |
 | item           | references | null: false, foreign_key: true |
 
 ### Association
 - belongs_to :user
 - belongs_to :item
+- belongs_to :address
+
+## addresses テーブル
+
+| Column             | Type   | Options     |
+| -------------- | ---------- | ----------- |
+| post_code      | string     | null: false |
+| prefectures_id | integer    | null: false |
+| municipalities | string     | null: false |
+| street_address | string     | null: false |
+| building       | string     |             |
+| telephone      | integer    | null: false |
+
+### Association
+- has_many :users, through: :address_users
+- has_many :items
+- has_many :orders
+
+## address_users テーブル
+
+| Column             | Type   | Options     |
+| -------------- | ---------- | ----------- |
+| user           | references | null: false, foreign_key: true |
+| address        | references | null: false, foreign_key: true |
+
+### Association
+- belongs_to :user
+- belongs_to :address

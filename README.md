@@ -16,7 +16,6 @@
 ### Association
 - has_many :items
 - has_many :orders
-- has_many :addresses, through: :address_users
 
 ## items テーブル
 
@@ -31,25 +30,22 @@
 | delivery_tame_id   | integer    | null: false |
 | price              | integer    | null: false |
 | user               | references | null: false, foreign_key: true |
-| address            | references | null: false, foreign_key: true |
 
 ### Association
 - belongs_to :user
 - has_one :order
-- belongs_to :address
 
 ## orders テーブル
 
 | Column             | Type   | Options     |
 | -------------- | ---------- | ----------- |
 | user           | references | null: false, foreign_key: true |
-| address        | references | null: false, foreign_key: true |
 | item           | references | null: false, foreign_key: true |
 
 ### Association
 - belongs_to :user
 - belongs_to :item
-- belongs_to :address
+- has_one :address
 
 ## addresses テーブル
 
@@ -61,19 +57,7 @@
 | street_address | string     | null: false |
 | building       | string     |             |
 | telephone      | integer    | null: false |
+| order          | references | null: false, foreign_key: true |
 
 ### Association
-- has_many :users, through: :address_users
-- has_many :items
-- has_many :orders
-
-## address_users テーブル
-
-| Column             | Type   | Options     |
-| -------------- | ---------- | ----------- |
-| user           | references | null: false, foreign_key: true |
-| address        | references | null: false, foreign_key: true |
-
-### Association
-- belongs_to :user
-- belongs_to :address
+- belongs_to :order

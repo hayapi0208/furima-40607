@@ -56,7 +56,7 @@
 | municipalities | string     | null: false |
 | street_address | string     | null: false |
 | building       | string     |             |
-| telephone      | integer    | null: false |
+| telephone      | string     | null: false |
 | order          | references | null: false, foreign_key: true |
 
 ### Association

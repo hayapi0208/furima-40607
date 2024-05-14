@@ -5,9 +5,14 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order_address = OrderAddress.new(order_params)
-    @donation_address.save(params,current_user.id)
-    redirect_to root_path
+    @order_address = OrderAddress.new(order_params.merge(user_id: current_user.id, item_id: params[:item_id]))
+    if @order_address.valid?
+      @order_address.save
+      redirect_to root_path
+    else
+      @item = Item.find(params[:item_id])
+      render :index, status: :unprocessable_entity
+    end
   end
 
   private

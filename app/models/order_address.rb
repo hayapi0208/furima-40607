@@ -9,6 +9,7 @@ class OrderAddress
     validates :telephone, numericality: {only_integer: true}, length: {in: 10..11}, format: {with: /\A\d+\z/, message: "is invalid"}
     validates :user_id
     validates :item_id
+    validates :token
   end
   validates :prefecture_id, numericality: {other_than: 1, message: "can't be blank"}
 

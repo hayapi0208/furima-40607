@@ -5,7 +5,7 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order_address = OrderAddress.new(order_params.merge(user_id: current_user.id, item_id: params[:item_id]))
+    @order_address = OrderAddress.new(order_params.merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token]))
     if @order_address.valid?
       @order_address.save
       redirect_to root_path
@@ -18,6 +18,6 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order_address).permit(:post_code, :prefecture_id, :municipalities, :street_address, :building, :telephone).merge(user_id: current_user.id, item_id: params[:item_id])
+    params.require(:order_address).permit(:post_code, :prefecture_id, :municipalities, :street_address, :building, :telephone).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
   end
 end

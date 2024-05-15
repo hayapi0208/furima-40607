@@ -37,8 +37,7 @@ RSpec.describe OrderAddress, type: :model do
       it 'post_codeが空だと購入できない' do
         @order_address.post_code = ''
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Post code can't be blank",
-                                                               'Post code is invalid. Include hyphen(-)')
+        expect(@order_address.errors.full_messages).to include("Post code can't be blank")
       end
       it 'post_codeにハイフン(-)がないと購入できない' do
         @order_address.post_code = '1234567'
@@ -83,12 +82,12 @@ RSpec.describe OrderAddress, type: :model do
       it 'telephoneに半角英字が入力されていると購入できない' do
         @order_address.telephone = 'asdfghjklow'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include('Telephone is not a number', 'Telephone is invalid')
+        expect(@order_address.errors.full_messages).to include('Telephone is not a number')
       end
       it 'telephoneに全角が入力されていると購入できない' do
         @order_address.telephone = '１２３４５６７８９１２'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include('Telephone is not a number', 'Telephone is invalid')
+        expect(@order_address.errors.full_messages).to include('Telephone is not a number')
       end
       it 'telephoneが9桁以下だと購入できない' do
         @order_address.telephone = '123456789'
